@@ -1,5 +1,5 @@
-import { Button, Grid, Typography } from '@mui/material'
-import React from 'react'
+import { Alert, Button, Grid, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import Side from './Side'
 import style from '../Client.module.css'
@@ -13,14 +13,25 @@ import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link } from 'react-router-dom'
-const rows = [
-    {
-        name: 'hsdvh',
+import axios from 'axios'
 
-    }
-];
 
 const AdminCategory = () => {
+    const [cat, setCat] = useState([])
+    const [delAlert, setDelAlert] = useState(false)
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/category').then((response) => {
+            setCat(response.data)
+        })
+    }, [delAlert])
+
+    const handleDelete = (id) => {
+        axios.delete(`http://localhost:8000/api/category/${id}`).then((response) => {
+            setDelAlert(true)
+            console.log(response.data)
+        })
+    }
     return (
         <>
             <Header />
@@ -35,6 +46,9 @@ const AdminCategory = () => {
                         </Button>
                     </Grid>
                     <Grid item xs={10}>
+                        {delAlert && <Alert severity="error" onClose={() => setDelAlert(false)} sx={{ width: 750 }}>
+                            Catgeory Deleted!
+                        </Alert>}
                         <TableContainer component={Paper} sx={{ border: 'none', boxShadow: 'none' }}>
                             <Table sx={{ width: 750, border: 'none', boxShadow: 'none' }} aria-label="simple table">
                                 <TableHead>
@@ -46,39 +60,20 @@ const AdminCategory = () => {
                                     </TableRow>
                                 </TableHead>
 
-                                <TableBody>
-                                    <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                        <TableCell component="th" scope="row" sx={{ fontSize: 16, fontWeight: 700 }}>1 </TableCell>
-                                        <TableCell align="right" sx={{ fontSize: 16, fontWeight: 700 }}>2</TableCell>
-                                        <TableCell align="right" sx={{ fontSize: 16, fontWeight: 500 }}>hdskjsadljnsdnlskdlknsdnljwhdjsjdndsnj,bnljbhv</TableCell>
-                                        <TableCell align="right">
-                                            <DeleteIcon sx={{ color: 'red' }} />
-                                            <EditIcon sx={{ color: '#8080f9', ml: 1 }} />
-                                        </TableCell>
-                                    </TableRow>
-                                </TableBody>
-                                <TableBody>
-                                    <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                        <TableCell component="th" scope="row" sx={{ fontSize: 16, fontWeight: 700 }}>1 </TableCell>
-                                        <TableCell align="right" sx={{ fontSize: 16, fontWeight: 700 }}>2</TableCell>
-                                        <TableCell align="right" sx={{ fontSize: 16, fontWeight: 500 }}>hdskjsadljnsdnlskdlknsdnljwhdjsjdndsnj,bnljbhv</TableCell>
-                                        <TableCell align="right">
-                                            <DeleteIcon sx={{ color: 'red' }} />
-                                            <EditIcon sx={{ color: '#8080f9', ml: 1 }} />
-                                        </TableCell>
-                                    </TableRow>
-                                </TableBody>
-                                <TableBody>
-                                    <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                        <TableCell component="th" scope="row" sx={{ fontSize: 16, fontWeight: 700 }}>1 </TableCell>
-                                        <TableCell align="right" sx={{ fontSize: 16, fontWeight: 700 }}>2</TableCell>
-                                        <TableCell align="right" sx={{ fontSize: 16, fontWeight: 500 }}>hdskjsadljnsdnlskdlknsdnljwhdjsjdndsnj,bnljbhv</TableCell>
-                                        <TableCell align="right">
-                                            <DeleteIcon sx={{ color: 'red' }} />
-                                            <EditIcon sx={{ color: '#8080f9', ml: 1 }} />
-                                        </TableCell>
-                                    </TableRow>
-                                </TableBody>
+                                {cat.map((item, key) => (
+                                    <TableBody key={key}>
+                                        <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                            <TableCell component="th" scope="row" sx={{ fontSize: 16, fontWeight: 700 }}>{item.id} </TableCell>
+                                            <TableCell align="right" sx={{ fontSize: 16, fontWeight: 700 }}>{item.parent_id}</TableCell>
+                                            <TableCell align="right" sx={{ fontSize: 16, fontWeight: 500 }}>{item.cat_title}</TableCell>
+                                            <TableCell align="right">
+                                                <DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} onClick={() => handleDelete(item.id)} />
+                                                <EditIcon sx={{ color: '#8080f9', ml: 1 }} />
+                                            </TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                ))}
+
 
                             </Table>
                         </TableContainer>
