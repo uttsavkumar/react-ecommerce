@@ -23,15 +23,17 @@ const AdminCategory = () => {
     useEffect(() => {
         axios.get('http://localhost:8000/api/category').then((response) => {
             setCat(response.data)
+            console.log(response.data)
+
         })
     }, [delAlert])
 
     const handleDelete = (id) => {
         axios.delete(`http://localhost:8000/api/category/${id}`).then((response) => {
-            setDelAlert(true)
-            console.log(response.data)
+            setDelAlert(prev => !prev)
         })
     }
+
     return (
         <>
             <Header />
@@ -46,7 +48,7 @@ const AdminCategory = () => {
                         </Button>
                     </Grid>
                     <Grid item xs={10}>
-                        {delAlert && <Alert severity="error" onClose={() => setDelAlert(false)} sx={{ width: 750 }}>
+                        {delAlert && <Alert severity="error" onClose={(prev) => setDelAlert(!prev)} sx={{ width: 750 }}>
                             Catgeory Deleted!
                         </Alert>}
                         <TableContainer component={Paper} sx={{ border: 'none', boxShadow: 'none' }}>
@@ -64,7 +66,7 @@ const AdminCategory = () => {
                                     <TableBody key={key}>
                                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                             <TableCell component="th" scope="row" sx={{ fontSize: 16, fontWeight: 700 }}>{item.id} </TableCell>
-                                            <TableCell align="right" sx={{ fontSize: 16, fontWeight: 700 }}>{item.parent_id}</TableCell>
+                                            <TableCell align="right" sx={{ fontSize: 16, fontWeight: 700 }}>{item.parent_id !== 0 ? item.parent.cat_title : "Parent Category"}</TableCell>
                                             <TableCell align="right" sx={{ fontSize: 16, fontWeight: 500 }}>{item.cat_title}</TableCell>
                                             <TableCell align="right">
                                                 <DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} onClick={() => handleDelete(item.id)} />

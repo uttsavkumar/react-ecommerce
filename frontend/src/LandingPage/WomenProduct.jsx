@@ -1,31 +1,46 @@
 import { Grid, Typography, Card, CardActionArea, CardMedia, CardContent, Collapse, List, ListItemButton, ListItemText } from '@mui/material'
 import shoe1 from "../shoesimages/shoe1.png";
 import { Box } from '@mui/system'
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Header from './Header'
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import axios from 'axios';
 
 const WomenProduct = () => {
   const [collpase, setCollpase] = useState(false)
-
+  const [data, setData] = useState([])
+  const [cat, setCat] = useState([])
   const handleExpand = () => {
     setCollpase(!collpase)
   }
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/women').then((res) => {
+      setData(res.data)
+    })
+    axios.get('http://localhost:8000/api/womencat').then((res) => {
+      setCat(res.data)
+    })
+  }, [])
+  const handleFilter = (id) => {
+    axios.get(`http://localhost:8000/api/filter/${id}`).then((res) => {
+      setData(res.data)
+    })
+  }
+  const nav = useNavigate()
+
   return (
     <>
       <Header />
       <Grid container>
         <Grid item xs={3} sx={{ borderRight: '.1px solid #f0efef9c', position: 'sticky', zIndex: 10, top: 0 }} >
           <Box sx={{ height: '100vh', paddingLeft: 7, pt: 1 }}>
-            <Typography sx={{ fontSize: 25, fontWeight: 500 }}>Women's Shoes(626)</Typography>
+            <Typography sx={{ fontSize: 25, fontWeight: 500 }}>Women's Shoes({data.length})</Typography>
             <Box sx={{ mt: 4, display: 'flex', flexDirection: 'column' }}>
-              <Typography component={Link} to="#" sx={{ textDecoration: 'none', color: '#111111', fontSize: 18, '&:hover': { textDecoration: 'underline' }, mt: .6 }}>Running</Typography>
-              <Typography component={Link} to="#" sx={{ textDecoration: 'none', color: '#111111', fontSize: 18, '&:hover': { textDecoration: 'underline' }, mt: .6 }}>Running</Typography>
-              <Typography component={Link} to="#" sx={{ textDecoration: 'none', color: '#111111', fontSize: 18, '&:hover': { textDecoration: 'underline' }, mt: .6 }}>Running</Typography>
-              <Typography component={Link} to="#" sx={{ textDecoration: 'none', color: '#111111', fontSize: 18, '&:hover': { textDecoration: 'underline' }, mt: .6 }}>Running</Typography>
-              <Typography component={Link} to="#" sx={{ textDecoration: 'none', color: '#111111', fontSize: 18, '&:hover': { textDecoration: 'underline' }, mt: .6 }}>Running</Typography>
+             {cat.map((item,key) => (
+              <Typography key={key} onClick={() => handleFilter(item.id)} component={Link} to="#" sx={{ textDecoration: 'none', color: '#111111', fontSize: 18, '&:hover': { textDecoration: 'underline' }, mt: .6,':focus':{textDecoration: 'underline',color:'#0d6efd'}  }}>{item.cat_title}</Typography>
+             ))}
             </Box>
           </Box>
         </Grid>
@@ -54,80 +69,27 @@ const WomenProduct = () => {
                 </Box>
             </Grid>
 
-            <Grid item xs={12} md={6} lg={4} >
-              <Card sx={{ p: 0, m: 0, border: 'none', boxShadow: 'none', }}>
-                <CardActionArea >
-                  <CardContent >
-                    <CardMedia
-                      component="img"
-                      height="300"
-                      image={shoe1}
-                      sx={{ backgroundColor: '#f0efef9c' }}
-                      alt="Paella dish"
-                    />
-                    <Typography sx={{ color: 'black', fontSize: 18, fontWeight: '500', pt: 2, flex: 1 }}> nike 2636 </Typography>
-                    <Typography sx={{ color: '#a2a2a2', fontSize: 16, fontWeight: '500', pt: .1 }}> Men's Shoes </Typography>
-                    <Typography sx={{ color: 'black', fontSize: 18, fontWeight: '500', pt: 1 }}> Rs. 81762 </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4} >
-              <Card sx={{ p: 0, m: 0, border: 'none', boxShadow: 'none', }}>
-                <CardActionArea >
-                  <CardContent >
-                    <CardMedia
-                      component="img"
-                      height="300"
-                      image={shoe1}
-                      sx={{ backgroundColor: '#f0efef9c' }}
-                      alt="Paella dish"
-                    />
-                    <Typography sx={{ color: 'black', fontSize: 18, fontWeight: '500', pt: 2, flex: 1 }}> nike 2636 </Typography>
-                    <Typography sx={{ color: '#a2a2a2', fontSize: 16, fontWeight: '500', pt: .1 }}> Men's Shoes </Typography>
-                    <Typography sx={{ color: 'black', fontSize: 18, fontWeight: '500', pt: 1 }}> Rs. 81762 </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4} >
-              <Card sx={{ p: 0, m: 0, border: 'none', boxShadow: 'none', }}>
-                <CardActionArea >
-                  <CardContent >
-                    <CardMedia
-                      component="img"
-                      height="300"
-                      image={shoe1}
-                      sx={{ backgroundColor: '#f0efef9c' }}
-                      alt="Paella dish"
-                    />
-                    <Typography sx={{ color: 'black', fontSize: 18, fontWeight: '500', pt: 2, flex: 1 }}> nike 2636 </Typography>
-                    <Typography sx={{ color: '#a2a2a2', fontSize: 16, fontWeight: '500', pt: .1 }}> Men's Shoes </Typography>
-                    <Typography sx={{ color: 'black', fontSize: 18, fontWeight: '500', pt: 1 }}> Rs. 81762 </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4} >
-              <Card sx={{ p: 0, m: 0, border: 'none', boxShadow: 'none', }}>
-                <CardActionArea >
-                  <CardContent >
-                    <CardMedia
-                      component="img"
-                      height="300"
-                      image={shoe1}
-                      sx={{ backgroundColor: '#f0efef9c' }}
-                      alt="Paella dish"
-                    />
-                    <Typography sx={{ color: 'black', fontSize: 18, fontWeight: '500', pt: 2, flex: 1 }}> nike 2636 </Typography>
-                    <Typography sx={{ color: '#a2a2a2', fontSize: 16, fontWeight: '500', pt: .1 }}> Men's Shoes </Typography>
-                    <Typography sx={{ color: 'black', fontSize: 18, fontWeight: '500', pt: 1 }}> Rs. 81762 </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-
-
+           {data.map((item,key) => (
+             <Grid item xs={12} md={6} lg={4} key={key} onClick={() => nav(`/single/${item.id}`)}>
+             <Card sx={{ p: 0, m: 0, border: 'none', boxShadow: 'none', }}>
+               <CardActionArea >
+                 <CardContent >
+                   <CardMedia
+                     component="img"
+                     height="300"
+                     src={`http://localhost:8000/images/${item.image}`}
+                     sx={{ backgroundColor: '#f0efef9c' }}
+                     alt="Paella dish"
+                   />
+                   <Typography sx={{ color: 'black', fontSize: 18, fontWeight: '500', pt: 2, flex: 1 }}> {item.title} </Typography>
+                   <Typography sx={{ color: '#a2a2a2', fontSize: 16, fontWeight: '500', pt: .1 }}>{item.cat_title} </Typography>
+                   <Typography sx={{ color: 'black', fontSize: 18, fontWeight: '500', pt: 1 }}> Rs. {item.price} </Typography>
+                 </CardContent>
+               </CardActionArea>
+             </Card>
+           </Grid>
+           ))}
+            
 
           </Grid>
         </Grid>

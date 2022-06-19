@@ -13,7 +13,12 @@ import AdminProduct from './Admin/AdminProduct';
 import AdminCategory from './Admin/AdminCategory';
 import InsertCategory from './Admin/InsertCategory';
 import InsertProduct from './Admin/InsertProduct';
+import AdminManageSize from './Admin/AdminManageSize';
+import Header from './Admin/Header';
+import AdminUnavailableSize from './Admin/AdminUnavailableSize';
+import AdminImage from './Admin/AdminImage';
 function App() {
+  
   return (
   <>
   <StyledEngineProvider injectFirst>
@@ -23,7 +28,7 @@ function App() {
      <Route element={<WomenProduct/>} path="/women/shoes"/>
      <Route element={<KidProduct/>} path="/kid/shoes"/>
      <Route element={<Cart/>} path="/cart"/>
-     <Route element={<SingleProduct/>} path="/single"/>
+     <Route element={<SingleProduct/>} path="/single/:id"/>
    </Routes>
    </StyledEngineProvider>
 
@@ -34,6 +39,9 @@ function App() {
     <Route element={<AdminProduct/>} path="/product"/>
     <Route element={<InsertCategory/>} path="/insert/category"/>
     <Route element={<InsertProduct/>} path="/insert/product"/>
+    <Route element={<AdminManageSize/>} path="/size"/>
+    <Route element={<AdminUnavailableSize/>} path="/size/unavailable"/>
+    <Route element={<AdminImage/>} path="/image"/>
   </Routes>
    </StyledEngineProvider>
  
