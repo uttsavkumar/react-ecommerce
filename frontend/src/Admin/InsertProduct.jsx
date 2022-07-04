@@ -57,7 +57,8 @@ const InsertProduct = () => {
                 image: image,
             }
         }).then(() => {
-            empty()
+            // empty()
+            console.log(image)
             console.log('inserted')
         })
     }

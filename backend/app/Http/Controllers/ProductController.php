@@ -128,19 +128,6 @@ class ProductController extends Controller
     public function singlePrd($id){
         return Product::where('id',$id)->with(['image','category'])->first();
     }
-    public function unsize($id){
-        if($prd = Product::where('id',$id)->with('sizeun')->first()){  
-             if(count($prd->sizeun) < 1){
-                return Size::all();
-            }
-            else{            
-                $s = Size::all(); 
-                foreach($s as $size){
-                   //unavialable size 
-                }
-            return $prd;
-            }
-        }
-    }
+  
    
 }

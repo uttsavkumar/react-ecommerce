@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import { Card, CardActionArea, CardMedia, Container, Grid } from '@mui/material'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -24,7 +24,8 @@ import shoe3 from '../shoesimages/shoe5.png'
 import AllLandingPage from './AllLandingPage';
 import Footer from './Footer';
 import {Link} from 'react-router-dom'
-
+import Auth from '../Context/AuthContext';
+import { useEffect } from 'react';
 
 const data = [
     {
@@ -54,7 +55,7 @@ const data = [
         inputcolor: '#78cde6',
         inputcolorhover: '#8ed1e4',
         btncolor: '#292b36',
-        btnhover: 'black',
+        btnhover: 'white',
         cardhover: '#badbfb',
         cardborderhover: 'none',
         status: false,
@@ -95,6 +96,8 @@ const Home = () => {
         setBg(newData)
         console.log(bg)
     }
+
+
     return (
         <>
             {

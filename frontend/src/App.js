@@ -17,6 +17,8 @@ import AdminManageSize from './Admin/AdminManageSize';
 import Header from './Admin/Header';
 import AdminUnavailableSize from './Admin/AdminUnavailableSize';
 import AdminImage from './Admin/AdminImage';
+import Login from './LandingPage/Login';
+import Signup from './LandingPage/Signup';
 function App() {
   
   return (
@@ -29,6 +31,8 @@ function App() {
      <Route element={<KidProduct/>} path="/kid/shoes"/>
      <Route element={<Cart/>} path="/cart"/>
      <Route element={<SingleProduct/>} path="/single/:id"/>
+     <Route element={<Login/>} path="/login"/>
+     <Route element={<Signup/>} path='/signup'/>
    </Routes>
    </StyledEngineProvider>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImageController;
@@ -43,6 +44,14 @@ Route::get('/singleprd/{id}',[ProductController::class,'singleprd']);
 Route::get('/unsize/{id}',[ProductController::class,'unsize']);
 Route::get('/sorting',[ProductController::class,'sorting']);
 
+
+Route::controller(AuthController::class)->group(function () {
+    Route::post('register', 'register');
+    Route::post('login', 'login');
+    Route::post('logout', 'logout');
+    Route::post('refresh', 'refresh');
+    
+});
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

@@ -12,7 +12,6 @@ class Product extends Model
     public function category(){
         return $this->hasOne(Category::class,'id','category_id');
     }
-  
     public function sizeun(){
         return $this->hasMany(SizeUnavailable::class,'product_id','id');
     }
